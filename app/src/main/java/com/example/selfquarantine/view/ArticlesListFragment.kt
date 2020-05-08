@@ -6,29 +6,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.findNavController
+import com.example.selfquarantine.databinding.FragmentArticlesListBinding
 import com.example.selfquarantine.databinding.FragmentBoardsListBinding
+import com.example.selfquarantine.viewModel.ArticlesListViewModel
 import com.example.selfquarantine.viewModel.BoardsListViewModel
 
-class BoardsListFragment : Fragment() {
+class ArticlesListFragment : Fragment() {
 
-    lateinit var binding : FragmentBoardsListBinding
-    lateinit var viewModel : BoardsListViewModel
+    lateinit var binding : FragmentArticlesListBinding
+    lateinit var viewModel : ArticlesListViewModel
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
 
-    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
-
-        binding = FragmentBoardsListBinding.inflate(inflater, container, false)
+        binding = FragmentArticlesListBinding.inflate(inflater, container, false)
         initBinding()
         return binding.root
     }
 
     private fun initBinding(){
-        viewModel = ViewModelProviders.of(this).get(BoardsListViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(ArticlesListViewModel::class.java)
         binding.handler = this
         binding.lifecycleOwner=this
         binding.viewModel = viewModel
-    }
-
-    fun onClickNext(view: View){
     }
 }
