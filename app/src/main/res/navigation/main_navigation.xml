@@ -6,5 +6,13 @@
     <fragment
         android:id="@+id/boardsListFragment"
         android:name="com.example.selfquarantine.view.BoardsListFragment"
-        android:label="BoardsListFragment" />
+        android:label="BoardsListFragment" >
+        <action
+            android:id="@+id/action_boardsListFragment_to_articlesListFragment"
+            app:destination="@id/articlesListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/articlesListFragment"
+        android:name="com.example.selfquarantine.view.ArticlesListFragment"
+        android:label="ArticlesListFragment" />
 </navigation>

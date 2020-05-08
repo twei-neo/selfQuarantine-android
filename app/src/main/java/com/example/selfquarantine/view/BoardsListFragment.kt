@@ -30,5 +30,7 @@ class BoardsListFragment : Fragment() {
     }
 
     fun onClickNext(view: View){
+        val action = BoardsListFragmentDirections.actionBoardsListFragmentToArticlesListFragment()
+        view.findNavController().navigate(action)
     }
 }
