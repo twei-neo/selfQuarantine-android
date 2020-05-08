@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/main_navigation.xml"
+    app:startDestination="@id/boardsListFragment">
+
+    <fragment
+        android:id="@+id/boardsListFragment"
+        android:name="com.example.selfquarantine.view.BoardsListFragment"
+        android:label="BoardsListFragment" >
+        <action
+            android:id="@+id/action_boardsListFragment_to_articlesListFragment"
+            app:destination="@id/articlesListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/articlesListFragment"
+        android:name="com.example.selfquarantine.view.ArticlesListFragment"
+        android:label="ArticlesListFragment" >
+        <action
+            android:id="@+id/action_articlesListFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/articleFragment"
+        android:name="com.example.selfquarantine.view.ArticleFragment"
+        android:label="ArticleFragment" />
+</navigation>
