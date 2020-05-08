@@ -14,5 +14,13 @@
     <fragment
         android:id="@+id/articlesListFragment"
         android:name="com.example.selfquarantine.view.ArticlesListFragment"
-        android:label="ArticlesListFragment" />
+        android:label="ArticlesListFragment" >
+        <action
+            android:id="@+id/action_articlesListFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/articleFragment"
+        android:name="com.example.selfquarantine.view.ArticleFragment"
+        android:label="ArticleFragment" />
 </navigation>

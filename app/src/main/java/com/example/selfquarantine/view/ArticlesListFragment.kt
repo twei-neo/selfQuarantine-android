@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import com.example.selfquarantine.databinding.FragmentArticlesListBinding
 import com.example.selfquarantine.databinding.FragmentBoardsListBinding
 import com.example.selfquarantine.viewModel.ArticlesListViewModel
@@ -27,5 +28,10 @@ class ArticlesListFragment : Fragment() {
         binding.handler = this
         binding.lifecycleOwner=this
         binding.viewModel = viewModel
+    }
+
+    fun onClickNext(view : View){
+        val action = ArticlesListFragmentDirections.actionArticlesListFragmentToArticleFragment()
+        view.findNavController().navigate(action)
     }
 }
