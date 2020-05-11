@@ -8,6 +8,7 @@
 
     <color name="toolBarBackground">#455DBB</color>
     <color name="titleBarBackground">#254BC4</color>
+    <color name="class_f2">#090</color>
     <color name="black">#000</color>
     <color name="white">#FFF</color>
 </resources>
