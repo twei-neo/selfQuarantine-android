@@ -1,5 +1,6 @@
 package com.example.selfquarantine.view
 
+import android.content.Intent
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
@@ -25,6 +26,7 @@ class ArticleFragment : Fragment() {
     private lateinit var titleBarBinding: WidgetTitleBarBinding
     private lateinit var toolBarBinding: WidgetToolBarBinding
     private lateinit var viewModel: ArticleViewModel
+    private lateinit var url : String
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,7 +40,7 @@ class ArticleFragment : Fragment() {
     }
 
     private fun updateContent() {
-        val url = "https://www.ptt.cc/bbs/Gossiping/M.1589191497.A.DAB.html"
+        url = "https://www.ptt.cc/bbs/Gossiping/M.1589191497.A.DAB.html"
         AsyncTaskHandle().execute(url)
     }
 
@@ -59,6 +61,14 @@ class ArticleFragment : Fragment() {
 
     fun onClickBack(view : View){
         view.findNavController().popBackStack()
+    }
+
+    fun onClickShare(view : View){
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type="type/palin"
+        intent.putExtra(Intent.EXTRA_SUBJECT, viewModel.title.value)
+        intent.putExtra(Intent.EXTRA_TEXT, viewModel.title.value + "\n" +url)
+        startActivity(Intent.createChooser(intent, viewModel.title.value))
     }
 
     inner class AsyncTaskHandle : AsyncTask<String, String, String>() {
