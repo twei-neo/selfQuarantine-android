@@ -4,5 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class ArticleViewModel : ViewModel() {
-    val title = MutableLiveData<String>().apply { value = "某篇文章" }
+    val title = MutableLiveData<String>().apply { value = "" }
+    val content = MutableLiveData<String>().apply { value = "" }
 }

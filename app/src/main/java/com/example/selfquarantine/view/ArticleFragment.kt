@@ -3,7 +3,6 @@ package com.example.selfquarantine.view
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +13,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.selfquarantine.databinding.FragmentArticleBinding
 import com.example.selfquarantine.viewModel.ArticleViewModel
 import java.lang.Exception
-import java.net.CookieManager
-import java.net.HttpCookie
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -67,10 +64,40 @@ class ArticleFragment : Fragment() {
             }
             return html
         }
-
+/*
+* <meta name="description" content="是肥肥啦
+肥肥這兩天都有發要重考醫學系的文章
+結果收到數個站內信，說他是政大企管碩，他說連他都考不上醫學系了，更不用說我..
+然後他說政大碩錄取率只有2%
+還說什麼他不到三十歲已經買了好幾個房子，連醫生都要跟他租房子才能開診所@@
+">
+* */
         override fun onPostExecute(result: String?) {
-            super.onPostExecute(result)
-            binding.tvContent.text = result
+            val lines = result?.split("\n") ?: return
+            val titleFilter = Regex("<title>.*</title>", RegexOption.IGNORE_CASE)
+            val contentFilter= Regex("<meta name=\"description\" content=\".*")
+            var isContentStart = false
+
+            for( line in lines){
+                if(titleFilter.matches(line)){
+                    var title = line
+                    title=title.replace("<title>","")
+                    title=title.replace("- 看板 Gossiping - 批踢踢實業坊</title>","")
+                    viewModel.title.value = title
+                }
+
+                if(contentFilter.matches(line)){
+                    var content = line.replace("<meta name=\"description\" content=\"", "")
+                    isContentStart = true
+                    viewModel.content.value = content
+                } else if(isContentStart){
+                    var content = line.replace("\">","")
+                    if(content != line)
+                        isContentStart = false
+                    content += "\n\n"
+                    viewModel.content.value += content
+                }
+            }
         }
     }
 }
