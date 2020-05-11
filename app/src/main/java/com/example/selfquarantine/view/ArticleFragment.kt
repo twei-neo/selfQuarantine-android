@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.selfquarantine.databinding.FragmentArticleBinding
+import com.example.selfquarantine.databinding.WidgetTitleBarBinding
 import com.example.selfquarantine.viewModel.ArticleViewModel
 import java.lang.Exception
 import java.net.HttpURLConnection
@@ -19,6 +20,7 @@ import java.net.URL
 class ArticleFragment : Fragment() {
 
     private lateinit var binding : FragmentArticleBinding
+    private lateinit var titleBarBinding: WidgetTitleBarBinding
     private lateinit var viewModel : ArticleViewModel
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
 
@@ -29,7 +31,7 @@ class ArticleFragment : Fragment() {
     }
 
     private fun updateContent() {
-        val url = "https://www.ptt.cc/bbs/Gossiping/M.1588941469.A.E64.html"
+        val url = "https://www.ptt.cc/bbs/Gossiping/M.1589191497.A.DAB.html"
         AsyncTaskHandle().execute(url)
     }
 
@@ -38,6 +40,10 @@ class ArticleFragment : Fragment() {
         binding.handler = this
         binding.lifecycleOwner=this
         binding.viewModel = viewModel
+
+        titleBarBinding = binding.layoutTitleBar
+        titleBarBinding.lifecycleOwner = this
+        titleBarBinding.viewModel = viewModel
     }
 
     inner class AsyncTaskHandle : AsyncTask<String, String, String>(){
@@ -65,29 +71,29 @@ class ArticleFragment : Fragment() {
             return html
         }
 /*
-* <meta name="description" content="是肥肥啦
-肥肥這兩天都有發要重考醫學系的文章
-結果收到數個站內信，說他是政大企管碩，他說連他都考不上醫學系了，更不用說我..
-然後他說政大碩錄取率只有2%
-還說什麼他不到三十歲已經買了好幾個房子，連醫生都要跟他租房子才能開診所@@
-">
+* <span class="article-meta-value">kbt2720 (master)</span>
 * */
         override fun onPostExecute(result: String?) {
             val lines = result?.split("\n") ?: return
-            val titleFilter = Regex("<title>.*</title>", RegexOption.IGNORE_CASE)
             val contentFilter= Regex("<meta name=\"description\" content=\".*")
+            val mainContentFilter = Regex(".*<div id=\"main-content\" class=\"bbs-screen bbs-content\">.*")
             var isContentStart = false
 
             for( line in lines){
-                if(titleFilter.matches(line)){
-                    var title = line
-                    title=title.replace("<title>","")
-                    title=title.replace("- 看板 Gossiping - 批踢踢實業坊</title>","")
-                    viewModel.title.value = title
+
+
+                if(mainContentFilter.matches(line)){
+                    val mainContent = line.split("</span>")
+                    for( content in mainContent)
+                        Log.d("ArticleFragment.kt.con", content)
+                    viewModel.author.value = mainContent[1].replace("<span class=\"article-meta-value\">", "")
+                    viewModel.boardName.value=mainContent[3].replace("<span class=\"article-meta-value\">", "")
+                    viewModel.title.value = mainContent[5].replace("<span class=\"article-meta-value\">", "")
+                    viewModel.postDate.value = mainContent[7].replace("<span class=\"article-meta-value\">", "")
                 }
 
                 if(contentFilter.matches(line)){
-                    var content = line.replace("<meta name=\"description\" content=\"", "")
+                    val content = line.replace("<meta name=\"description\" content=\"", "")
                     isContentStart = true
                     viewModel.content.value = content
                 } else if(isContentStart){
@@ -97,6 +103,7 @@ class ArticleFragment : Fragment() {
                     content += "\n\n"
                     viewModel.content.value += content
                 }
+
             }
         }
     }
