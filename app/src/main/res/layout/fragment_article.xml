@@ -44,7 +44,7 @@
                     android:layout_marginTop="20sp"
                     android:paddingHorizontal="10sp"
                     android:textSize="16sp"
-                    android:text="@{viewModel.content}"
+                    android:text="@{viewModel.contentSpannableStringBuilder}"
                     android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/layout_title_bar" />

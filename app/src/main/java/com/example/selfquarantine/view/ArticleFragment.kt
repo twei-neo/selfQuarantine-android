@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.selfquarantine.view
 
 import android.content.Intent
@@ -15,13 +17,14 @@ import com.example.selfquarantine.view.custom.ArticleAsyncTask
 import com.example.selfquarantine.viewModel.ArticleViewModel
 
 
+@Suppress("DEPRECATION")
 class ArticleFragment : Fragment() {
 
     private lateinit var binding: FragmentArticleBinding
     private lateinit var titleBarBinding: WidgetTitleBarBinding
     private lateinit var toolBarBinding: WidgetToolBarBinding
     private lateinit var viewModel: ArticleViewModel
-    private lateinit var url : String
+    private lateinit var url: String
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,15 +57,16 @@ class ArticleFragment : Fragment() {
         toolBarBinding.lifecycleOwner = this
     }
 
-    fun onClickBack(view : View){
+    fun onClickBack(view: View) {
         view.findNavController().popBackStack()
     }
 
-    fun onClickShare(view : View){
+    @Suppress("UNUSED_PARAMETER")
+    fun onClickShare(view: View) {
         val intent = Intent(Intent.ACTION_SEND)
-        intent.type="type/palin"
+        intent.type = "type/palin"
         intent.putExtra(Intent.EXTRA_SUBJECT, viewModel.title.value)
-        intent.putExtra(Intent.EXTRA_TEXT, viewModel.title.value + "\n" +url)
+        intent.putExtra(Intent.EXTRA_TEXT, viewModel.title.value + "\n" + url)
         startActivity(Intent.createChooser(intent, viewModel.title.value))
     }
 
