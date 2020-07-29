@@ -1,6 +1,5 @@
 package com.example.selfquarantine.view.custom
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.AsyncTask
 import android.os.Build
@@ -10,9 +9,6 @@ import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat.startActivity
-import androidx.core.text.buildSpannedString
-import androidx.core.text.toSpannable
 import com.example.selfquarantine.viewModel.ArticleViewModel
 import java.lang.Exception
 import java.net.HttpURLConnection
